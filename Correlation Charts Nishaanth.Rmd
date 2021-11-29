@@ -1,0 +1,44 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+library(ggplot2)
+data <- read.csv("QL_Rank.csv")
+head(data)
+str(data)
+
+rownames(data) <- data$UA_Name
+
+
+head(data)
+
+
+# CORRELATION CHART ############################################################
+
+correlation_clean <- cor(data[,sapply(data, is.numeric)], use = "complete.obs", method = "pearson")
+remotes::install_github("laresbernardo/lares")
+
+
+library(lares)
+
+corr_cross(data, 
+           max_pvalue = .05,
+           top = 10)
+
+```
+
+```{r}
+## Correlations with growth
+library(lares)
+data %>% corr_var(Growth)
+
+```
+
+
+
